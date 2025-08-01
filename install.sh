@@ -1,23 +1,30 @@
 #!/bin/bash
 
-echo "📦 Installing Hyprland Minimal Config..."
+echo "🔧 Installing all required packages for Minimal Hyprland..."
 
+# Pastikan sudah update sistem
+sudo pacman -Syu --noconfirm
+
+# Install paket utama
+sudo pacman -S --noconfirm hyprland kitty waybar rofi swww \
+    thunar networkmanager network-manager-applet blueman \
+    pipewire wireplumber pipewire-audio \
+    polkit-kde-agent grim slurp wl-clipboard \
+    ttf-jetbrains-mono-nerd xdg-utils xdg-user-dirs
+
+# Enable layanan penting
+sudo systemctl enable NetworkManager
+sudo systemctl enable bluetooth
+
+# Buat folder config
 mkdir -p ~/.config/hypr
 mkdir -p ~/.config/waybar
+mkdir -p ~/.config/rofi
 
+# Salin config
 cp -r .config/hypr/* ~/.config/hypr/
 cp -r .config/waybar/* ~/.config/waybar/
-
-echo '✅ Config installed! Start Hyprland and press SUPER+SPACE to toggle floating mode.'
-mkdir -p ~/.config/rofi
 cp -r .config/rofi/* ~/.config/rofi/
-mkdir -p ~/.config/hypr/scripts
-cp -r .config/hypr/scripts/* ~/.config/hypr/scripts/
-chmod +x ~/.config/hypr/scripts/*.sh
-# Notifikasi
-mkdir -p ~/.config/swaync
-# (Optional: bisa ditambah konfigurasi swaync kalau mau)
 
-# Wallpaper sync ke SDDM
-cp .config/hypr/scripts/wallsync.sh ~/.config/hypr/scripts/wallsync.sh
-chmod +x ~/.config/hypr/scripts/wallsync.sh
+echo "✅ Semua config dan paket sudah diinstall!"
+echo "➡️ Jalankan Hyprland lalu tekan SUPER+SPACE untuk toggle floating."
